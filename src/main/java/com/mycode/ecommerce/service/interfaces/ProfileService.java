@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface ProfileService {
     Flux<Profile> all();
     Mono<Profile> getById(String id);
+    Mono<Profile> save(Profile profile);
+    Mono<Profile> update(Profile profile);
 }

@@ -7,6 +7,8 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @ToString
 @Document
 @Getter
@@ -14,6 +16,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class Profile {
     @Id
-    private String id;
+    private UUID id;
     private String name;
 }

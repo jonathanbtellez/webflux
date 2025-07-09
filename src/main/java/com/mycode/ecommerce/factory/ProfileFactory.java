@@ -12,7 +12,6 @@ import reactor.core.publisher.Flux;
 import java.util.UUID;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class ProfileFactory implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -26,7 +25,7 @@ public class ProfileFactory implements ApplicationListener<ApplicationReadyEvent
                         Flux.just("A","B","C","D")
                         .map(name ->
                                 Profile.builder()
-                                        .id(UUID.randomUUID().toString())
+                                        .id(UUID.randomUUID())
                                         .name(name + "@mail.com")
                                         .build()
                         )

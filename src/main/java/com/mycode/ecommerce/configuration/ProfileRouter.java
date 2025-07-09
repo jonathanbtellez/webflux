@@ -19,9 +19,11 @@ public class ProfileRouter {
 
     @Bean
     public RouterFunction<ServerResponse> profileRoutes() {
-        log.info("Loading profile routes");
+        log.info("Config profile routes");
         return RouterFunctions.route(GET("/profile"), profileHandler::getAll)
-                .andRoute(GET("/profile/{id}"), profileHandler::getUserBy);
+                .andRoute(GET("/profile/{id}"), profileHandler::getUserBy)
+                .andRoute(POST("/profile"), profileHandler::save)
+                .andRoute(PUT("/profile"), profileHandler::update);
     }
 
 
