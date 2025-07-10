@@ -1,6 +1,6 @@
 package com.mycode.ecommerce.handler;
 
-import com.mycode.ecommerce.model.Profile;
+import com.mycode.ecommerce.service.model.Profile;
 import com.mycode.ecommerce.service.interfaces.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

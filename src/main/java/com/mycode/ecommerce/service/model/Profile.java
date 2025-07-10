@@ -1,4 +1,4 @@
-package com.mycode.ecommerce.model;
+package com.mycode.ecommerce.service.model;
 
 import lombok.Builder;
 import lombok.Getter;

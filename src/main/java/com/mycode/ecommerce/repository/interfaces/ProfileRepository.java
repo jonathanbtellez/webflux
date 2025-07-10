@@ -1,6 +1,6 @@
-package com.mycode.ecommerce.repository;
+package com.mycode.ecommerce.repository.interfaces;
 
-import com.mycode.ecommerce.model.Profile;
+import com.mycode.ecommerce.service.model.Profile;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
-package com.mycode.ecommerce.service;
+package com.mycode.ecommerce.service.implement;
 
-import com.mycode.ecommerce.model.Profile;
-import com.mycode.ecommerce.repository.ProfileRepository;
+import com.mycode.ecommerce.service.model.Profile;
+import com.mycode.ecommerce.repository.interfaces.ProfileRepository;
 import com.mycode.ecommerce.service.interfaces.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
