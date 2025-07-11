@@ -1,4 +1,4 @@
-package com.mycode.ecommerce.handler.dto;
+package com.mycode.ecommerce.auth.dto;
 
 import lombok.Builder;
 import lombok.Getter;

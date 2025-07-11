@@ -1,4 +1,4 @@
-package com.mycode.ecommerce.configuration;
+package com.mycode.ecommerce.configuration.router;
 
 import com.mycode.ecommerce.handler.ProfileHandler;
 import lombok.RequiredArgsConstructor;
