@@ -2,7 +2,7 @@ package com.mycode.ecommerce.auth.handler;
 
 import com.mycode.ecommerce.auth.dto.RegisterDto;
 import com.mycode.ecommerce.auth.mapper.RegisterMapper;
-import com.mycode.ecommerce.service.interfaces.AuthService;
+import com.mycode.ecommerce.auth.service.interfaces.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

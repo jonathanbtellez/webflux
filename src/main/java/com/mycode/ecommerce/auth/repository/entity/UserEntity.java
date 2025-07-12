@@ -1,16 +1,20 @@
-package com.mycode.ecommerce.service.model;
+package com.mycode.ecommerce.auth.repository.entity;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Document(collection = "user_collection")
+@Builder
 @Getter
 @Setter
-@Builder
-public class User {
+public class UserEntity {
+    @Id
     private UUID id;
     private String username;
     private String email;

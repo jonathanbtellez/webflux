@@ -1,7 +1,7 @@
-package com.mycode.ecommerce.service.mapper;
+package com.mycode.ecommerce.auth.service.mapper;
 
-import com.mycode.ecommerce.repository.entity.UserEntity;
-import com.mycode.ecommerce.service.model.User;
+import com.mycode.ecommerce.auth.repository.entity.UserEntity;
+import com.mycode.ecommerce.auth.service.model.User;
 
 import java.util.UUID;
 
