@@ -2,24 +2,16 @@ package com.mycode.ecommerce.auth.service.mapper;
 
 import com.mycode.ecommerce.auth.repository.entity.UserEntity;
 import com.mycode.ecommerce.auth.service.model.User;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.UUID;
 
-public class UserMapper {
-    public static UserEntity fromUserToUserEntity(User user) {
-        return UserEntity.builder()
-                .id(user.getId() == null ? UUID.randomUUID() : user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .build();
-    }
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+    @Mapping(target = "isActive", constant = "true")
+    UserEntity fromUserToUserEntity(User user);
 
-    public static User fromUserEntityToUser(UserEntity userEntity) {
-        return User.builder()
-                .id(userEntity.getId())
-                .username(userEntity.getUsername())
-                .email(userEntity.getEmail())
-                .build();
-    }
+    @Mapping(target = "isActive", constant = "true")
+    User fromUserEntityToUser(UserEntity user);
 }
