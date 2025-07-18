@@ -5,4 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface AuthService {
    Mono<User> register(User user);
+   Mono<User> login(User user);
 }

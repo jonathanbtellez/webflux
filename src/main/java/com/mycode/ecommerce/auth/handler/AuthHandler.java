@@ -1,6 +1,8 @@
 package com.mycode.ecommerce.auth.handler;
 
+import com.mycode.ecommerce.auth.dto.LoginDto;
 import com.mycode.ecommerce.auth.dto.RegisterDto;
+import com.mycode.ecommerce.auth.mapper.LoginMapper;
 import com.mycode.ecommerce.auth.mapper.RegisterMapper;
 import com.mycode.ecommerce.auth.service.interfaces.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class AuthHandler {
     private final RegisterMapper registerMapper;
+    private final LoginMapper loginMapper;
     private final AuthService authService;
 
     public Mono<ServerResponse> register(ServerRequest request) {
@@ -24,4 +27,13 @@ public class AuthHandler {
                 .flatMap(authService::register)
                 .flatMap(savedProfile -> ServerResponse.ok().bodyValue(savedProfile));
     }
+
+    public Mono<ServerResponse> login(ServerRequest request) {
+        log.info("Login called");
+        return request.bodyToMono(LoginDto.class)
+                .map(loginMapper::fromLoginDtoToUser)
+                .flatMap(authService::login)
+                .flatMap(userLoggedIn -> ServerResponse.ok().bodyValue(userLoggedIn));
+    }
+
 }

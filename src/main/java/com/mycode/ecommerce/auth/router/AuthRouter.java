@@ -24,6 +24,7 @@ public class AuthRouter {
         return RouterFunctions.route()
                 .nest(path("/auth"), builder ->
                     builder.route(POST("/register"), authHandler::register)
+                            .route(POST("/login"), authHandler::login)
                 ).build();
     }
 
