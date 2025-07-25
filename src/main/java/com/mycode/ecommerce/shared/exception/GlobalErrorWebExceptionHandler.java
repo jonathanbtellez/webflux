@@ -1,5 +1,6 @@
 package com.mycode.ecommerce.shared.exception;
 
+import com.mycode.ecommerce.auth.dto.ResponseDto;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -35,6 +36,11 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
         HttpStatus status = HttpStatus.valueOf(statusCode);
         return ServerResponse.status(status)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(attrs));
+                .body(Mono.just(ResponseDto.builder()
+                        .status("error")
+                                .message(status.getReasonPhrase())
+                                        .data(attrs)
+                                .build()), ResponseDto.class
+                        );
     }
 }

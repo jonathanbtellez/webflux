@@ -1,7 +1,10 @@
 package com.mycode.ecommerce.auth.handler;
 
+import com.mycode.ecommerce.auth.dto.AuthDto;
 import com.mycode.ecommerce.auth.dto.LoginDto;
 import com.mycode.ecommerce.auth.dto.RegisterDto;
+import com.mycode.ecommerce.auth.dto.ResponseDto;
+import com.mycode.ecommerce.auth.mapper.AuthDtoMapper;
 import com.mycode.ecommerce.auth.mapper.LoginMapper;
 import com.mycode.ecommerce.auth.mapper.RegisterMapper;
 import com.mycode.ecommerce.auth.service.interfaces.AuthService;
@@ -18,6 +21,7 @@ import reactor.core.publisher.Mono;
 public class AuthHandler {
     private final RegisterMapper registerMapper;
     private final LoginMapper loginMapper;
+    private final AuthDtoMapper authDtoMapper;
     private final AuthService authService;
 
     public Mono<ServerResponse> register(ServerRequest request) {
@@ -32,8 +36,17 @@ public class AuthHandler {
         log.info("Login called");
         return request.bodyToMono(LoginDto.class)
                 .map(loginMapper::fromLoginDtoToUser)
-                .flatMap(authService::login)
-                .flatMap(userLoggedIn -> ServerResponse.ok().bodyValue(userLoggedIn));
+                .flatMap(user ->
+                    authService.login(user).map(authDtoMapper::fromAuthToAuthDto)
+                )
+                .flatMap(authDto ->
+                        ServerResponse.ok().bodyValue(
+                                ResponseDto.builder()
+                                        .status("success")
+                                        .message("")
+                                        .data(authDto)
+                                        .build()
+                        ));
     }
 
 }

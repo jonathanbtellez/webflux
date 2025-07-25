@@ -4,13 +4,13 @@ import com.mycode.ecommerce.auth.repository.entity.UserEntity;
 import com.mycode.ecommerce.auth.repository.interfaces.UserRepository;
 import com.mycode.ecommerce.auth.service.interfaces.AuthService;
 import com.mycode.ecommerce.auth.service.mapper.UserMapper;
+import com.mycode.ecommerce.auth.service.model.Auth;
 import com.mycode.ecommerce.auth.service.model.CustomUserDetails;
 import com.mycode.ecommerce.auth.service.model.User;
 import com.mycode.ecommerce.shared.exception.DuplicateUserException;
 import com.mycode.ecommerce.shared.service.interfaces.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Mono<User> login(User user) {
+    public Mono<Auth> login(User user) {
         return userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail())
                 .flatMap(userEntity -> {
                     User userInDb = userMapper.fromUserEntityToUser(userEntity);
@@ -44,9 +44,14 @@ public class AuthServiceImpl implements AuthService {
                     return Mono.just(userInDb);
                 }).switchIfEmpty( Mono.defer(() -> Mono.error(new DuplicateUserException("User not found"))))
                 .map(userDb -> {
-                    String token = jwtService.generateToken(new CustomUserDetails(userDb));
-                    log.info(token);
-                    return userDb;
+                    String refreshToken = jwtService.generateToken(new CustomUserDetails(userDb));
+                    return Auth.builder()
+                            .accessToken(jwtService.generateToken(new CustomUserDetails(userDb)))
+                            .refreshToken(jwtService.generateRefreshToken(new CustomUserDetails(userDb)))
+                            .userId(userDb.getId())
+                            .tokenType(jwtService.getTokenType())
+                            .expiresIn(jwtService.getExpirationMs())
+                            .build();
                 });
     }
 }

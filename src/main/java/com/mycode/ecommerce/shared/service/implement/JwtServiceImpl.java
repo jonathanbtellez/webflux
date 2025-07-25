@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.mycode.ecommerce.shared.service.interfaces.JwtService;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,12 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.expiration}")
     private long expirationMs;
 
+    @Value("${jwt.expirationRefresh}")
+    private long expirationRefreshMs;
+
+    @Value("${jwt.tokenType}")
+    private String tokenType;
+
     private Algorithm algorithm;
 
     @PostConstruct
@@ -36,6 +43,25 @@ public class JwtServiceImpl implements JwtService {
                         .map(GrantedAuthority::getAuthority).toList())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationMs))
                 .sign(algorithm);
+    }
+
+    public String generateRefreshToken(UserDetails user) {
+        return JWT.create()
+                .withSubject(user.getUsername())
+                .withClaim("roles", user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority).toList())
+                .withExpiresAt(new Date(System.currentTimeMillis() + expirationRefreshMs))
+                .sign(algorithm);
+    }
+
+    @Override
+    public Long getExpirationMs() {
+        return expirationMs;
+    }
+
+    @Override
+    public String getTokenType() {
+        return tokenType;
     }
 
     public boolean isTokenValid(String token) {
