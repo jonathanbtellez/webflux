@@ -13,6 +13,6 @@ public interface RegisterMapper {
     @Mapping(target = "lastLoginAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "isActive", constant = "true")
     @Mapping(target = "failedAttempts", constant = "0")
-    @Mapping(target = "lockedUntil", constant = "null")
+    @Mapping(target = "lockedUntil", expression = "java(null)")
     User fromRegisterDtoToUser(RegisterDto dto);
 }

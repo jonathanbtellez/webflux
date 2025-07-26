@@ -29,8 +29,8 @@ public class SecurityConfig {
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .authorizeExchange(ex -> ex
-                        .pathMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .pathMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/actuator/**").authenticated()
                         .anyExchange().authenticated())
                 .addFilterAt(authFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();

@@ -38,7 +38,7 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(ResponseDto.builder()
                         .status("error")
-                                .message(status.getReasonPhrase())
+                                .message(getError(request).getMessage())
                                         .data(attrs)
                                 .build()), ResponseDto.class
                         );
